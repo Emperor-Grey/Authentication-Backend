@@ -1,10 +1,10 @@
-const express = require('express');
-const collection = require('../config/db.js');
-const bcrypt = require('bcrypt');
+const express = require("express");
+const collection = require("../config/db.js");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   const data = {
     username: req.body.username,
     email: req.body.email,
@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
 
   try {
     if (existingUser) {
-      res.send('Try another name user already exists');
+      res.send("Try another name user already exists");
     } else {
       // Hashing the password
       const salt = 12;
@@ -29,17 +29,17 @@ router.post('/register', async (req, res) => {
     res.json(userData);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const user = await collection.findOne({ username: req.body.username });
 
     if (!user) {
       res.status(401).json({
         isLoggedIn: false,
-        message: 'User not found. You are not you',
+        message: "User not found. You are not you",
       });
       return;
     }
@@ -52,7 +52,7 @@ router.post('/login', async (req, res) => {
     if (req.body.email !== user.email) {
       res.status(401).json({
         isLoggedIn: false,
-        message: 'Incorrect Credentials',
+        message: "Incorrect Credentials",
       });
       return;
     }
@@ -60,7 +60,7 @@ router.post('/login', async (req, res) => {
     if (!isCorrectPass) {
       res.status(401).json({
         isLoggedIn: false,
-        message: 'How Can you forget your password bro',
+        message: "How Can you forget your password bro",
       });
       return;
     }
@@ -68,9 +68,9 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      message: 'You Have Successfully Logged In(✌️)...',
+      message: "You Have Successfully Logged In(✌️)...",
       isLoggedIn: false,
-      message: 'Internal Server Error',
+      message: "Internal Server Error",
     });
   }
 });
