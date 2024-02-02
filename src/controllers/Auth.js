@@ -2,7 +2,7 @@ const collection = require('../config/db.js');
 const bcrypt = require('bcrypt');
 
 // register Auth Controller
-export const RegisterUser = async (req, res) => {
+const RegisterUser = async (req, res) => {
   const data = {
     username: req.body.username,
     email: req.body.email,
@@ -32,7 +32,7 @@ export const RegisterUser = async (req, res) => {
 };
 
 // Login Auth Controller
-export const LoginUser = async (req, res) => {
+const LoginUser = async (req, res) => {
   try {
     const user = await collection.findOne({ username: req.body.username });
 
@@ -74,3 +74,5 @@ export const LoginUser = async (req, res) => {
     });
   }
 };
+
+module.exports = { RegisterUser, LoginUser };
